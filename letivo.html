@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>customs-clearance.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="customs-bridge-app---technical-specification">Customs Bridge App - Technical Specification</h1>
+<p><strong>By:</strong> Vula InfinIT<br>
+<strong>Version:</strong> 1.1<br>
+<strong>Date:</strong> August 1, 2025<br>
+<strong>Prepared For:</strong> Letivo<br>
+<strong>Technology Stack:</strong></p>
+<ul>
+<li>Backend: C# .NET 8 (Microservices)</li>
+<li>Mobile: Flutter 3.0</li>
+<li>Web: Next.js 14</li>
+<li>Cloud: Google Cloud Platform</li>
+<li>Database: Cloud SQL (PostgreSQL) + Firestore</li>
+<li>Auth: Firebase Authentication</li>
+</ul>
+<hr>
+<h2 id="1-system-architecture">1. System Architecture</h2>
+<h3 id="11-cloud-infrastructure-diagram">1.1 Cloud Infrastructure Diagram</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Web Frontend<br>Next.js] --> B[Backend API<br>.NET 8]
+    C[Mobile App<br>Flutter] --> B
+    B --> D[Cloud SQL<br>PostgreSQL]
+    B --> E[Firestore]
+    B --> F[Cloud Storage]
+    B --> G[Firebase Auth]
+    H[External Systems<br>e.g. SARS] <--> B
+</div></code></pre>
+<h3 id="12-microservices">1.2 Microservices</h3>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Technology</th>
+<th>Responsibility</th>
+<th>Time Estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Auth Service</td>
+<td>.NET 8</td>
+<td>User authentication, RBAC</td>
+<td>10 days</td>
+</tr>
+<tr>
+<td>Declaration Service</td>
+<td>.NET 8</td>
+<td>Customs processing engine</td>
+<td>21 days</td>
+</tr>
+<tr>
+<td>Tracking Service</td>
+<td>.NET 8 + Firestore</td>
+<td>Real-time status updates</td>
+<td>14 days</td>
+</tr>
+<tr>
+<td>Document Service</td>
+<td>.NET 8 + Cloud Storage</td>
+<td>File management</td>
+<td>14 days</td>
+</tr>
+<tr>
+<td>Notification Service</td>
+<td>Firebase Cloud Messaging</td>
+<td>Alerts and messaging</td>
+<td>14 days</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="2-core-modules">2. Core Modules</h2>
+<h3 id="21-authentication-service-10-days">2.1 Authentication Service (10 days)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// RBAC Implementation</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> UserRole {
+    Importer,
+    Exporter,
+    Broker,
+    Admin
+}
+
+<span class="hljs-comment">// JWT Claims Mapping</span>
+services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =&gt; {
+        options.Authority = <span class="hljs-string">"https://securetoken.google.com/customs-bridge"</span>;
+        options.TokenValidationParameters = <span class="hljs-keyword">new</span> TokenValidationParameters {
+            ValidateIssuer = <span class="hljs-literal">true</span>,
+            ValidIssuer = <span class="hljs-string">"https://securetoken.google.com/customs-bridge"</span>,
+            ValidateAudience = <span class="hljs-literal">true</span>,
+            ValidAudience = <span class="hljs-string">"customs-bridge"</span>,
+            ValidateLifetime = <span class="hljs-literal">true</span>
+        };
+    });
+</div></code></pre>
+<h3 id="22-declaration-processing-engine-21-days">2.2 Declaration Processing Engine (21 days)</h3>
+<p><strong>Workflow:</strong></p>
+<ol>
+<li>User submits declaration via API</li>
+<li>System validates data schema (3 days)</li>
+<li>Compliance rules engine checks regulations (7 days)</li>
+<li>Documents attached to declaration (5 days)</li>
+<li>Status updated to &quot;Submitted&quot; (3 days)</li>
+</ol>
+<p><strong>Key Class:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CustomsDeclaration</span> {
+    [<span class="hljs-meta">Key</span>] 
+    <span class="hljs-keyword">public</span> Guid DeclarationId { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    
+    [<span class="hljs-meta">Required</span>]
+    <span class="hljs-keyword">public</span> DeclarationType Type { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    
+    [<span class="hljs-meta">Required</span>]
+    [<span class="hljs-meta">StringLength(30)</span>]
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> ImporterId { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    
+    <span class="hljs-keyword">public</span> DeclarationStatus Status { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = DeclarationStatus.Draft;
+    
+    [<span class="hljs-meta">Required</span>]
+    <span class="hljs-keyword">public</span> DateTime SubmissionDate { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    
+    <span class="hljs-keyword">public</span> List&lt;DocumentAttachment&gt; Attachments { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">new</span>();
+}
+</div></code></pre>
+<h3 id="23-real-time-tracking-system-14-days">2.3 Real-time Tracking System (14 days)</h3>
+<p><strong>Firestore Structure:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// shipments/SHIP123</span>
+{
+  <span class="hljs-attr">"declarationId"</span>: <span class="hljs-string">"DECL456"</span>,
+  <span class="hljs-attr">"currentStatus"</span>: <span class="hljs-string">"Processing"</span>,
+  <span class="hljs-attr">"history"</span>: [
+    {
+      <span class="hljs-attr">"status"</span>: <span class="hljs-string">"Submitted"</span>,
+      <span class="hljs-attr">"timestamp"</span>: <span class="hljs-string">"2025-08-01T14:00:00Z"</span>,
+      <span class="hljs-attr">"actor"</span>: <span class="hljs-string">"user123"</span>
+    }
+  ],
+  <span class="hljs-attr">"lastUpdated"</span>: <span class="hljs-string">"2025-08-01T14:30:00Z"</span>
+}
+</div></code></pre>
+<h3 id="24-document-management-14-days">2.4 Document Management (14 days)</h3>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+    User->>API: POST /documents/upload
+    API->>Validation: Check file (type/size) (2 days)
+    Validation->>VirusScan: Scan file (3 days)
+    VirusScan-->>API: Scan result
+    alt Clean file
+        API->>Cloud Storage: Save document (3 days)
+        API->>Database: Record metadata (2 days)
+        API-->>User: 201 Created
+    else Infected
+        API-->>User: 400 Bad Request
+    end
+</div></code></pre>
+<hr>
+<h2 id="3-database-design">3. Database Design</h2>
+<h3 id="31-postgresql-schema">3.1 PostgreSQL Schema</h3>
+<pre><code class="language-mermaid"><div class="mermaid">erDiagram
+    users ||--o{ declarations : "submit"
+    users {
+        string user_id PK
+        string email
+        string role
+        datetime created_at
+    }
+    declarations {
+        uuid declaration_id PK
+        string user_id FK
+        string status
+        datetime submission_date
+        jsonb declaration_data
+    }
+    documents {
+        uuid document_id PK
+        uuid declaration_id FK
+        string storage_path
+        string file_name
+        datetime uploaded_at
+    }
+</div></code></pre>
+<h3 id="32-firestore-collections">3.2 Firestore Collections</h3>
+<table>
+<thead>
+<tr>
+<th>Collection</th>
+<th>Description</th>
+<th>Time Estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>shipments</td>
+<td>Real-time tracking data</td>
+<td>5 days</td>
+</tr>
+<tr>
+<td>messages</td>
+<td>In-app chat history</td>
+<td>7 days</td>
+</tr>
+<tr>
+<td>notifications</td>
+<td>Push notification queue</td>
+<td>3 days</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="4-api-specification">4. API Specification</h2>
+<h3 id="41-key-endpoints">4.1 Key Endpoints</h3>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Description</th>
+<th>Time Estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/api/auth/register</code></td>
+<td>POST</td>
+<td>Create new account</td>
+<td>2 days</td>
+</tr>
+<tr>
+<td><code>/api/declarations</code></td>
+<td>POST</td>
+<td>Submit new declaration</td>
+<td>5 days</td>
+</tr>
+<tr>
+<td><code>/api/declarations?status=processing</code></td>
+<td>GET</td>
+<td>Filter declarations</td>
+<td>3 days</td>
+</tr>
+<tr>
+<td><code>/api/documents/upload</code></td>
+<td>POST</td>
+<td>Upload document</td>
+<td>4 days</td>
+</tr>
+<tr>
+<td><code>/api/shipments/{id}/track</code></td>
+<td>GET</td>
+<td>Get real-time status</td>
+<td>2 days</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-declaration-submission-example">4.2 Declaration Submission (Example)</h3>
+<pre class="hljs"><code><div>POST /api/declarations
+{
+  <span class="hljs-attr">"declarationType"</span>: <span class="hljs-string">"IMPORT"</span>,
+  <span class="hljs-attr">"importerId"</span>: <span class="hljs-string">"IMP78901"</span>,
+  <span class="hljs-attr">"goodsDescription"</span>: <span class="hljs-string">"Electronics components"</span>,
+  <span class="hljs-attr">"value"</span>: <span class="hljs-number">12500.00</span>,
+  <span class="hljs-attr">"originCountry"</span>: <span class="hljs-string">"CN"</span>,
+  <span class="hljs-attr">"attachments"</span>: [
+    <span class="hljs-string">"doc_1a2b3c.pdf"</span>,
+    <span class="hljs-string">"doc_4d5e6f.jpg"</span>
+  ]
+}
+</div></code></pre>
+<hr>
+<h2 id="5-security--compliance">5. Security &amp; Compliance</h2>
+<h3 id="51-data-protection-measures-21-days-total">5.1 Data Protection Measures (21 days total)</h3>
+<ul>
+<li><strong>Encryption at rest</strong>: Cloud KMS (5 days)</li>
+<li><strong>Data masking</strong>: Sensitive fields in logs (3 days)</li>
+<li><strong>Audit trails</strong>: Cloud Audit Logs (7 days)</li>
+<li><strong>Vulnerability scanning</strong>: Monthly penetration tests (6 days)</li>
+</ul>
+<h3 id="52-gdprpopia-implementation-14-days">5.2 GDPR/POPIA Implementation (14 days)</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph LR
+    A[Data Collection] --> B[Minimize Data] (2 days)
+    B --> C[Anonymize Where Possible] (4 days)
+    C --> D[Secure Storage] (3 days)
+    D --> E[Controlled Access] (3 days)
+    E --> F[Right to Erasure] (2 days)
+</div></code></pre>
+<h3 id="53-compliance-features-7-days">5.3 Compliance Features (7 days)</h3>
+<ul>
+<li>Automatic data retention policies (2 days)</li>
+<li>User data export endpoint (3 days)</li>
+<li>Activity logging (2 days)</li>
+</ul>
+<hr>
+<h2 id="6-devops-setup">6. DevOps Setup</h2>
+<h3 id="61-cicd-pipeline-10-days">6.1 CI/CD Pipeline (10 days)</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph LR
+    A[Code Commit] --> B[Run Tests] (2 days)
+    B --> C[Build Docker Images] (3 days)
+    C --> D[Push to GCR] (1 day)
+    D --> E[Deploy to Staging] (2 days)
+    E --> F[Manual Approval] (1 day)
+    F --> G[Deploy to Production] (1 day)
+</div></code></pre>
+<h3 id="62-infrastructure-as-code-7-days">6.2 Infrastructure as Code (7 days)</h3>
+<pre class="hljs"><code><div># Google Cloud Resources (3 days)
+resource &quot;google_sql_database_instance&quot; &quot;main&quot; {
+  name             = &quot;customs-db-instance&quot;
+  database_version = &quot;POSTGRES_14&quot;
+  settings {
+    tier = &quot;db-f1-micro&quot;
+  }
+}
+
+# Firestore setup (2 days)
+resource &quot;google_firestore_database&quot; &quot;tracking&quot; {
+  name = &quot;tracking-db&quot;
+  location_id = &quot;nam5&quot;
+  type = &quot;FIRESTORE_NATIVE&quot;
+}
+
+# Network configuration (2 days)
+resource &quot;google_compute_network&quot; &quot;vpc_network&quot; {
+  name = &quot;customs-vpc&quot;
+}
+</div></code></pre>
+<hr>
+<h2 id="7-development-roadmap-with-time-estimates">7. Development Roadmap with Time Estimates</h2>
+<pre><code class="language-mermaid"><div class="mermaid">gantt
+    title Development Timeline
+    dateFormat  YYYY-MM-DD
+    section Phase 1: Foundation (31 days)
+    Infrastructure Setup   :a1, 2025-08-05, 7d
+    Auth Service           :a2, after a1, 10d
+    Core API Framework     :a3, after a2, 14d
+
+    section Phase 2: MVP Features (35 days)
+    Declaration Module     :b1, after a3, 21d
+    Document Management    :b2, after a3, 14d
+    Basic Tracking         :b3, after a3, 14d
+
+    section Phase 3: Compliance (35 days)
+    Reporting Engine       :c1, after b1, 14d
+    Audit System           :c2, after b1, 14d
+    Regulations Adapter    :c3, after b1, 7d
+    Security Implementation :c4, after b1, 14d
+
+    section Phase 4: UI & Mobile (42 days)
+    Web Frontend           :d1, after a3, 21d
+    Mobile App             :d2, after a3, 21d
+    Dashboard UI           :d3, after b1, 14d
+
+    section Phase 5: Communication (21 days)
+    Notification Service   :e1, after c1, 14d
+    In-app Messaging       :e2, after c1, 14d
+    Template Engine        :e3, after e1, 7d
+
+    section Phase 6: Testing & Launch (35 days)
+    Load Testing           :f1, after e2, 14d
+    Security Hardening     :f2, after e2, 14d
+    UAT Deployment         :f3, after f1, 7d
+    Production Launch      :f4, after f3, 7d
+</div></code></pre>
+<h3 id="time-estimate-summary">Time Estimate Summary:</h3>
+<ul>
+<li><strong>Total Development Time</strong>: 199 days (~6.5 months)</li>
+<li><strong>Phase 1: Foundation</strong>: 31 days</li>
+<li><strong>Phase 2: MVP Features</strong>: 35 days</li>
+<li><strong>Phase 3: Compliance</strong>: 35 days</li>
+<li><strong>Phase 4: UI &amp; Mobile</strong>: 42 days</li>
+<li><strong>Phase 5: Communication</strong>: 21 days</li>
+<li><strong>Phase 6: Testing &amp; Launch</strong>: 35 days</li>
+<li><strong>Buffer (15%)</strong>: 30 days</li>
+<li><strong>Estimated Completion</strong>: March 12, 2026</li>
+</ul>
+<hr>
+<h2 id="8-initial-setup-guide-7-days">8. Initial Setup Guide (7 days)</h2>
+<h3 id="81-environment-setup-3-days">8.1 Environment Setup (3 days)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Create GCP project (1 day)</span>
+gcloud projects create customs-bridge --<span class="hljs-built_in">set</span>-as-default
+
+<span class="hljs-comment"># Enable services (1 day)</span>
+gcloud services <span class="hljs-built_in">enable</span> \
+  sqladmin.googleapis.com \
+  firestore.googleapis.com \
+  cloudbuild.googleapis.com \
+  run.googleapis.com
+
+<span class="hljs-comment"># Create database (1 day)</span>
+gcloud sql instances create customs-db \
+  --database-version=POSTGRES_14 \
+  --tier=db-f1-micro
+</div></code></pre>
+<h3 id="82-code-scaffolding-2-days">8.2 Code Scaffolding (2 days)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Backend (0.5 days)</span>
+dotnet new webapi -n CustomsAPI -o src/backend
+
+<span class="hljs-comment"># Web frontend (0.5 days)</span>
+npx create-next-app@latest web-frontend --typescript --app
+
+<span class="hljs-comment"># Mobile app (1 day)</span>
+flutter create --org za.co.letivo customs_mobile
+</div></code></pre>
+<h3 id="83-core-declaration-model-2-days">8.3 Core Declaration Model (2 days)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// DeclarationStatus.cs (1 day)</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> DeclarationStatus 
+{
+    Draft,
+    Submitted,
+    Processing,
+    Cleared,
+    HeldForInspection,
+    Rejected
+}
+
+<span class="hljs-comment">// CustomsDeclaration.cs (1 day)</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CustomsDeclaration</span> 
+{
+    <span class="hljs-keyword">public</span> Guid Id { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> DeclarationType Type { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> ImporterId { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> DateTime SubmissionDate { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> DeclarationStatus Status { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> List&lt;DocumentAttachment&gt; Attachments { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+}
+</div></code></pre>
+<hr>
+<p><strong>Prepared By:</strong><br>
+Elvis / Vula InfinIT<br>
+<strong>Contact:</strong> elvis@vulainfinit.co.za<br>
+<strong>Date:</strong> August 1, 2025</p>
+
+</body>
+</html>
