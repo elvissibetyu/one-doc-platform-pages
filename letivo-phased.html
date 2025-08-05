@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customs Bridge App - Implementation Plan</title>
+    <style>
+        :root {
+            --primary: #1a3a6c;
+            --secondary: #2c5282;
+            --accent: #e74c3c;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 5px solid var(--accent);
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .phase-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .phase-header {
+            background: var(--secondary);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .phase-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .phase-cost {
+            background: var(--accent);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .phase-body {
+            padding: 25px;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: var(--light);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 5px;
+        }
+        
+        h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .timeline {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        
+        .timeline-bar {
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .timeline-progress {
+            height: 100%;
+            background: var(--success);
+            border-radius: 5px;
+            width: 0;
+            animation: fillBar 1.5s ease-out forwards;
+        }
+        
+        .timeline-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .summary {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .total-cost {
+            font-size: 2.2rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 20px 10px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background: #0e2a53;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-top: 40px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .highlight {
+            background: #fff9db;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        @keyframes fillBar {
+            from { width: 0; }
+        }
+        
+        .phase-cost-breakdown {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .signature {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .signature-box {
+            width: 45%;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: modalAppear 0.3s ease-out;
+        }
+        
+        @keyframes modalAppear {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .contact-form textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .download-options {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .download-option {
+            display: block;
+            margin: 15px 0;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .download-option:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Customs Bridge App</h1>
+            <p class="subtitle">Phased Implementation Plan with Cost Estimates</p>
+            <div class="contact-info">
+                <p><strong>Prepared By:</strong> Elvis Sibetyu / Vula InfinIT</p>
+                <p><strong>Contact:</strong> elvis@vulainfinit.co.za</p>
+                <p><strong>Date:</strong> 1 August 2025</p>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="summary">
+            <h2>Project Summary</h2>
+            <p>Phased implementation delivering value quickly with an operational MVP in just 30 days</p>
+            <div class="total-cost">Total Project Cost: R 303,000</div>
+            <p>Payment terms: 50% at phase commencement, 50% at phase completion</p>
+            <!-- <a href="#" class="btn" id="downloadBtn">Download Full Proposal</a>
+            <a href="#" class="btn btn-secondary" id="contactBtn">Contact Us</a> -->
+        </div>
+        
+        <div class="phase-card">
+            <div class="phase-header">
+                <div class="phase-title">Phase 1: Core MVP (30 Days)</div>
+                <div class="phase-cost">R 108,000</div>
+            </div>
+            <div class="phase-body">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Functionality</h3>
+                        <ul>
+                            <li>User authentication (Broker/Importer roles)</li>
+                            <li>Customs declaration submission</li>
+                            <li>Document upload (single file)</li>
+                            <li>Basic shipment tracking (Draft/Submitted/Cleared)</li>
+                            <li>Simple dashboard</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Value Proposition</h3>
+                        <p>Delivers operational system in just 30 days allowing client to begin processing customs declarations immediately. Provides foundation for future enhancements.</p>
+                        <p><strong>Key Benefit:</strong> Immediate value with minimal investment</p>
+                    </div>
+                </div>
+                
+                <div class="timeline">
+                    <h3>Phase Timeline</h3>
+                    <div class="timeline-bar">
+                        <div class="timeline-progress" style="width: 100%"></div>
+                    </div>
+                    <div class="timeline-labels">
+                        <span>Start: 1 Aug 2025</span>
+                        <span>Prototype: 15 Aug 2025</span>
+                        <span>Delivery: 30 Aug 2025</span>
+                    </div>
+                </div>
+                
+                <div class="phase-cost-breakdown">
+                    <h3>Cost Breakdown</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Resource</th>
+                                <th>Days</th>
+                                <th>Hours</th>
+                                <th>Rate</th>
+                                <th>Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Developer 1</td>
+                                <td>20</td>
+                                <td>60</td>
+                                <td>R600/hour</td>
+                                <td>R 36,000</td>
+                            </tr>
+                            <tr>
+                                <td>Developer 2</td>
+                                <td>20</td>
+                                <td>60</td>
+                                <td>R600/hour</td>
+                                <td>R 36,000</td>
+                            </tr>
+                            <tr>
+                                <td>Project Manager</td>
+                                <td>30</td>
+                                <td>60</td>
+                                <td>R300/hour</td>
+                                <td>R 18,000</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" style="text-align: right; font-weight: bold;">Subtotal</td>
+                                <td style="font-weight: bold;">R 90,000</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" style="text-align: right;">Infrastructure Setup</td>
+                                <td>R 18,000</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" style="text-align: right; font-weight: bold;">Total Phase 1</td>
+                                <td style="font-weight: bold;">R 108,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="phase-card">
+            <div class="phase-header">
+                <div class="phase-title">Phase 2: Compliance Essentials (20 Days)</div>
+                <div class="phase-cost">R 72,000</div>
+            </div>
+            <div class="phase-body">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Functionality</h3>
+                        <ul>
+                            <li>Full 6-status tracking</li>
+                            <li>POPIA/GDPR compliance</li>
+                            <li>Audit trail implementation</li>
+                            <li>Basic PDF reports</li>
+                            <li>Email notifications</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Value Proposition</h3>
+                        <p>Ensures regulatory compliance and adds essential tracking features based on initial client feedback. Enhances operational visibility and meets legal requirements.</p>
+                        <p><strong>Key Benefit:</strong> Compliance-ready system</p>
+                    </div>
+                </div>
+                
+                <div class="timeline">
+                    <h3>Phase Timeline</h3>
+                    <div class="timeline-bar">
+                        <div class="timeline-progress" style="width: 100%"></div>
+                    </div>
+                    <div class="timeline-labels">
+                        <span>Start: 1 Sep 2025</span>
+                        <span>Progress: 10 Sep 2025</span>
+                        <span>Delivery: 20 Sep 2025</span>
+                    </div>
+                </div>
+                
+                <div class="phase-cost-breakdown">
+                    <h3>Cost Breakdown</h3>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Developer 1</td>
+                                <td>15</td>
+                                <td>45</td>
+                                <td>R600/hour</td>
+                                <td>R 27,000</td>
+                            </tr>
+                            <tr>
+                                <td>Developer 2</td>
+                                <td>15</td>
+                                <td>45</td>
+                                <td>R600/hour</td>
+                                <td>R 27,000</td>
+                            </tr>
+                            <tr>
+                                <td>Project Manager</td>
+                                <td>20</td>
+                                <td>40</td>
+                                <td>R300/hour</td>
+                                <td>R 12,000</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" style="text-align: right; font-weight: bold;">Total Phase 2</td>
+                                <td style="font-weight: bold;">R 72,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="phase-card">
+            <div class="phase-header">
+                <div class="phase-title">Phase 3: Workflow Enhancement (20 Days)</div>
+                <div class="phase-cost">R 72,000</div>
+            </div>
+            <div class="phase-body">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Functionality</h3>
+                        <ul>
+                            <li>Bulk declaration processing</li>
+                            <li>In-app notifications</li>
+                            <li>Advanced document management</li>
+                            <li>Dashboard enhancements</li>
+                            <li>Basic analytics</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Value Proposition</h3>
+                        <p>Focuses on efficiency improvements and user experience based on real-world usage from Phase 1. Enables brokers to handle higher volumes with less effort.</p>
+                        <p><strong>Key Benefit:</strong> Operational efficiency gains</p>
+                    </div>
+                </div>
+                
+                <div class="timeline">
+                    <h3>Phase Timeline</h3>
+                    <div class="timeline-bar">
+                        <div class="timeline-progress" style="width: 100%"></div>
+                    </div>
+                    <div class="timeline-labels">
+                        <span>Start: 21 Sep 2025</span>
+                        <span>Progress: 1 Oct 2025</span>
+                        <span>Delivery: 10 Oct 2025</span>
+                    </div>
+                </div>
+                
+                <div class="phase-cost-breakdown">
+                    <h3>Cost Breakdown</h3>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Developer 1</td>
+                                <td>15</td>
+                                <td>45</td>
+                                <td>R600/hour</td>
+                                <td>R 27,000</td>
+                            </tr>
+                            <tr>
+                                <td>Developer 2</td>
+                                <td>15</td>
+                                <td>45</td>
+                                <td>R600/hour</td>
+                                <td>R 27,000</td>
+                            </tr>
+                            <tr>
+                                <td>Project Manager</td>
+                                <td>20</td>
+                                <td>40</td>
+                                <td>R300/hour</td>
+                                <td>R 12,000</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" style="text-align: right; font-weight: bold;">Total Phase 3</td>
+                                <td style="font-weight: bold;">R 72,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="phase-card">
+            <div class="phase-header">
+                <div class="phase-title">Phase 4: Launch Preparation (15 Days)</div>
+                <div class="phase-cost">R 51,000</div>
+            </div>
+            <div class="phase-body">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Functionality</h3>
+                        <ul>
+                            <li>Load testing & optimization</li>
+                            <li>Security hardening</li>
+                            <li>User acceptance testing</li>
+                            <li>Deployment automation</li>
+                            <li>Basic training materials</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Value Proposition</h3>
+                        <p>Ensures the system is production-ready with focus on performance, security, and user adoption. Finalizes the solution for full operational deployment.</p>
+                        <p><strong>Key Benefit:</strong> Enterprise-grade deployment</p>
+                    </div>
+                </div>
+                
+                <div class="timeline">
+                    <h3>Phase Timeline</h3>
+                    <div class="timeline-bar">
+                        <div class="timeline-progress" style="width: 100%"></div>
+                    </div>
+                    <div class="timeline-labels">
+                        <span>Start: 13 Oct 2025</span>
+                        <span>Testing: 20 Oct 2025</span>
+                        <span>Delivery: 27 Oct 2025</span>
+                    </div>
+                </div>
+                
+                <div class="phase-cost-breakdown">
+                    <h3>Cost Breakdown</h3>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Developer 1</td>
+                                <td>10</td>
+                                <td>30</td>
+                                <td>R600/hour</td>
+                                <td>R 18,000</td>
+                            </tr>
+                            <tr>
+                                <td>Developer 2</td>
+                                <td>10</td>
+                                <td>30</td>
+                                <td>R600/hour</td>
+                                <td>R 18,000</td>
+                            </tr>
+                            <tr>
+                                <td>Project Manager</td>
+                                <td>15</td>
+                                <td>30</td>
+                                <td>R300/hour</td>
+                                <td>R 9,000</td>
+                            </tr>
+                            <tr>
+                                <td>Security Audit</td>
+                                <td>2</td>
+                                <td>6</td>
+                                <td>R1,000/hour</td>
+                                <td>R 6,000</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" style="text-align: right; font-weight: bold;">Total Phase 4</td>
+                                <td style="font-weight: bold;">R 51,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="signature">
+            <div class="signature-box">
+                <p>Prepared By:</p>
+                <p><strong>Elvis Sibetyu</strong></p>
+                <p>Technical Lead, Vula InfinIT</p>
+            </div>
+            <div class="signature-box">
+                <p>Approved By:</p>
+                <p>________________________</p>
+                <p>Customs Bridge Consulting</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Vula InfinIT &copy; 2025 | Custom Software Solutions | www.vulainfinit.co.za</p>
+        <p>This proposal is valid for 30 days from 1 August 2025</p>
+    </footer>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeContact">&times;</span>
+            <h2>Contact Us</h2>
+            <div class="contact-form">
+                <input type="text" id="name" placeholder="Your Name" required>
+                <input type="email" id="email" placeholder="Your Email" required>
+                <input type="text" id="subject" placeholder="Subject" required>
+                <textarea id="message" placeholder="Your Message" required></textarea>
+                <button class="btn" id="sendMessage">Send Message</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Download Modal -->
+    <div class="modal" id="downloadModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeDownload">&times;</span>
+            <h2>Download Options</h2>
+            <div class="download-options">
+                <a href="#" class="download-option" id="downloadPDF">Download as PDF</a>
+                <a href="#" class="download-option" id="downloadDOC">Download as Word Document</a>
+                <a href="#" class="download-option" id="downloadPPT">Download as Presentation</a>
+            </div>
+            <p style="text-align: center; margin-top: 20px;">We'll email the document to you immediately</p>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const downloadBtn = document.getElementById('downloadBtn');
+        const contactBtn = document.getElementById('contactBtn');
+        const contactModal = document.getElementById('contactModal');
+        const downloadModal = document.getElementById('downloadModal');
+        const closeContact = document.getElementById('closeContact');
+        const closeDownload = document.getElementById('closeDownload');
+        const sendMessage = document.getElementById('sendMessage');
+        
+        // Animation for timeline bars
+        document.addEventListener('DOMContentLoaded', function() {
+            const timelineBars = document.querySelectorAll('.timeline-progress');
+            timelineBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 300);
+            });
+        });
+        
+        // Modal functionality
+        downloadBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            downloadModal.style.display = 'flex';
+        });
+        
+        contactBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            contactModal.style.display = 'flex';
+        });
+        
+        closeContact.addEventListener('click', function() {
+            contactModal.style.display = 'none';
+        });
+        
+        closeDownload.addEventListener('click', function() {
+            downloadModal.style.display = 'none';
+        });
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === contactModal) {
+                contactModal.style.display = 'none';
+            }
+            if (e.target === downloadModal) {
+                downloadModal.style.display = 'none';
+            }
+        });
+        
+        // Download options functionality
+        document.querySelectorAll('.download-option').forEach(option => {
+            option.addEventListener('click', function(e) {
+                e.preventDefault();
+                const format = this.id.replace('download', '');
+                alert(`Your ${format} download will begin shortly. Thank you!`);
+                downloadModal.style.display = 'none';
+            });
+        });
+        
+        // Contact form submission
+        sendMessage.addEventListener('click', function() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            
+            if(name && email) {
+                alert(`Thank you ${name}! Your message has been sent. We'll contact you at ${email} shortly.`);
+                contactModal.style.display = 'none';
+                
+                // Reset form
+                document.getElementById('name').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('subject').value = '';
+                document.getElementById('message').value = '';
+            } else {
+                alert('Please fill in all required fields');
+            }
+        });
+    </script>
+</body>
+</html>
