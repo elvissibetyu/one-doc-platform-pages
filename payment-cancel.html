@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Cancelled - OneDoc</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .cancel-icon {
+            width: 80px;
+            height: 80px;
+            background: #F59E0B;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            animation: shake 0.8s ease-out;
+        }
+        
+        .cancel-symbol {
+            width: 40px;
+            height: 40px;
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
+        }
+        
+        h1 {
+            color: #1F2937;
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            color: #6B7280;
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .message-box {
+            background: #FEF3C7;
+            border: 1px solid #F59E0B;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            color: #92400E;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 15px;
+            flex-direction: column;
+        }
+        
+        .btn {
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: #3B82F6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2563EB;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #F3F4F6;
+            color: #374151;
+            border: 1px solid #E5E7EB;
+        }
+        
+        .btn-secondary:hover {
+            background: #E5E7EB;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cancel-icon">
+            <svg class="cancel-symbol" viewBox="0 0 24 24">
+                <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        
+        <h1>Payment Cancelled</h1>
+        <p class="subtitle">Your payment was cancelled and no charges were made to your account.</p>
+        
+        <div class="message-box">
+            <p><strong>What happened?</strong></p>
+            <p>You chose to cancel the payment process. Your OneDoc appointment has not been confirmed and payment was not processed.</p>
+        </div>
+        
+        <div class="actions">
+            <a href="#" class="btn btn-primary" onclick="retryPayment()">Try Payment Again</a>
+            <a href="#" class="btn btn-secondary" onclick="returnToApp()">Return to OneDoc</a>
+        </div>
+    </div>
+
+    <script>
+        function getUrlParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return {
+                transactionId: urlParams.get('TransactionId'),
+                amount: urlParams.get('Amount'),
+                status: urlParams.get('Status'),
+                statusMessage: urlParams.get('StatusMessage')
+            };
+        }
+
+        function retryPayment() {
+            if (window.flutter_inappwebview) {
+                window.flutter_inappwebview.callHandler('retryPayment', getUrlParams());
+            } else {
+                window.location.href = 'onedoc://retry-payment?' + window.location.search;
+            }
+        }
+
+        function returnToApp() {
+            if (window.flutter_inappwebview) {
+                window.flutter_inappwebview.callHandler('paymentCancelled', getUrlParams());
+            } else {
+                window.location.href = 'onedoc://payment-cancelled?' + window.location.search;
+            }
+        }
+    </script>
+</body>
+</html>
